@@ -1,0 +1,204 @@
+
+# include <cstdio>
+# include <ctime>
+# include <cstdlib>
+
+
+
+class Posicao {
+public :
+int l ;
+int c ;
+};
+
+class PilhaPosicao{
+public :
+Posicao * v ;
+int tam_max ;
+int topo ;
+int cont ; // n ú mero de elementos na pilha
+// m é todo construtor , inicializa a pilha
+
+void ini (int tamanho ){
+v = new Posicao [ tamanho ];
+tam_max = tamanho;
+topo = 0;
+cont = 0;
+}
+
+void empilhar (Posicao p){
+if(cont<tam_max){
+  v[topo].l=p.l;
+  v[topo].c=p.c;
+  printf("a posicao empilhada foi  l=%d e c=%d\n",v[topo].l,v[topo].c);
+  topo=topo+1;
+  cont++;
+  
+}
+else{printf("não tinha espaço na pilha\n");}
+}
+
+Posicao desempilhar(){
+  Posicao desempilhado;
+  if(cont>0){
+    desempilhado.l=v[topo].l;
+    desempilhado.c=v[topo].c;
+    printf("a posicao l=%d e c=%d foi desempilhada\n",desempilhado.l,desempilhado.c);
+    cont--;
+    topo=topo-1;
+  }
+  else{printf("não tinham elementos na pilha\n");}
+  return desempilhado;
+}
+
+int vazia (){
+  if(cont==0){
+    printf("pilha vazia\n");
+    return 0;
+    }
+  printf("pilha ocupada\n");
+  return 1;
+}
+};
+
+void cria_lab(char **lab, int n){
+  char x;
+  Posicao inicial, final;
+  //criando as paredes
+  for(int i=0; i<n;i++){
+    for(int j=0;j<n;j++){
+      lab[i][j]='#';
+     printf("%c ",lab[i][j]);
+  } 
+  printf("\n");
+  }
+  getchar();
+  lab[1][1]='i';
+  inicial.l=1;
+  inicial.c=1;
+  lab[n-2][n-2]='f';
+  final.l=n-2;
+  final.c=n-2;
+  srand(time(NULL));
+
+printf("\nUSE AS TECLAS 'A', 'S', 'D' e 'W' PARA DESENHAR SEU LABERINTO \n"); 
+//criando o caminho de saida
+while(lab[inicial.l+1][inicial.c]!='f'&&lab[inicial.l-1][inicial.c]!='f'&&lab[inicial.l][inicial.c+1]!='f'&&lab[inicial.l][inicial.c-1]!='f'){
+      
+      x=getchar();
+      system("clear");
+      if(x=='w'){
+        lab[inicial.l-1][inicial.c]=' ';
+        inicial.l=inicial.l-1;
+      }
+      else if(x=='s' ){
+        lab[inicial.l+1][inicial.c]=' ';
+        inicial.l=inicial.l+1;
+      }
+      else if(x=='a'){
+        lab[inicial.l][inicial.c-1]=' ';
+        inicial.c=inicial.c-1;
+      }
+      else if(x=='d'){
+        lab[inicial.l][inicial.c+1]=' ';
+        inicial.c=inicial.c+1;
+      }
+  //printando depois de cada movimento  
+  for(int i=0; i<n;i++){
+  for(int j=0;j<n;j++){
+     printf("%c ",lab[i][j]);
+    } 
+  printf("\n");
+     }  
+  }
+  
+
+  system("clear");
+  for(int i=0; i<n;i++){
+  for(int j=0;j<n;j++){
+   printf("%c ",lab[i][j]);
+     
+    } 
+  printf("\n");
+     }
+  printf("sai do laço\n");
+};
+
+int  main(){
+Posicao p;
+PilhaPosicao pilha;
+char **lab;
+int n;
+pilha.ini(200);
+printf("digite o tamanho do mapa\n");
+scanf("%d",&n);
+//aloca memoria para a matriz  
+lab=new char*[n];
+for(int i=0; i<n;i++){lab[i]=new char[n];}
+
+
+
+//cria o laberinto
+cria_lab(lab,n);
+
+
+//procurando a saida do laberinto
+Posicao inicial, final;
+inicial.l=1;
+inicial.c=1;
+final.l=n-2;
+final.c=n-2;
+p.l=inicial.l;
+p.c=inicial.c;
+
+      
+while(lab[final.l][final.c]!='.'){
+  
+    if(lab[p.l+1][p.c]==' '||lab[p.l+1][p.c]=='f'){
+      p.l=p.l+1;
+      p.c=p.c;
+      pilha.empilhar(p);
+      lab[p.l][p.c]='.';
+    }
+      
+    else if(lab[p.l-1][p.c]==' '||lab[p.l-1][p.c]=='f'){
+      p.l=p.l-1;
+      p.c=p.c;
+      pilha.empilhar(p);
+      lab[p.l][p.c]='.';
+    }
+      
+    else if(lab[p.l][p.c+1]==' '||lab[p.l][p.c+1]=='f'){
+      p.l=p.l;
+      p.c=p.c+1;
+      pilha.empilhar(p);
+      lab[p.l][p.c]='.';
+    }
+      
+    else if(lab[p.l][p.c-1]==' '||lab[p.l][p.c-1]=='f'){
+      p.l=p.l;
+      p.c=p.c-1;
+      pilha.empilhar(p);
+      lab[p.l][p.c]='.';
+    }
+      
+    else{p=pilha.desempilhar();}
+  
+    //mostra o laberinto
+    for(int i=0;i<n;i++){
+    for(int j=0;j<n;j++){
+      printf("%c ",lab[i][j]);
+    }
+  printf("\n");
+    }
+    getchar();
+    system("clear");
+}
+
+printf("parabens! voce achou a saida\n!!!");
+
+  
+//libera a memoria da matriz
+//for(int i=0; i<n;i++){delete(lab[i]);}
+  return 0;
+}
