@@ -1,0 +1,87 @@
+#include <cstdio>
+#include <cstdlib>
+
+
+
+int main(){
+char jogo[3][3],k=0,esc=-1;
+int cont=0;
+for(int i=0;i<3;i++){
+for(int j=0;j<3;j++){
+jogo[i][j]='0'+k;
+printf("%c ",jogo[i][j]);
+  k++;
+}
+  printf("\n");}
+  while(esc!='-'){
+    printf("\nDigite a posição que deseja jogar ou 9 para começar um próximo jogo\n");
+    scanf("%c",&esc);
+    system("clear");
+    
+    if(esc=='0'){
+      if(cont%2==0){jogo[0][0]='x';}
+      else{jogo[0][0]='o';}
+      }   
+    else if(esc=='1'){
+      if(cont%2==0){jogo[0][1]='x';}
+      else{jogo[0][1]='o';}
+      cont++;
+    }
+    else if(esc=='2'){
+      if(cont%2==0){jogo[0][2]='x';}
+      else{jogo[0][2]='o';}
+      cont++;
+    } 
+    else if(esc=='3'){
+      if(cont%2==0){jogo[1][0]='x';}
+      else{jogo[1][0]='o';}
+      cont++;
+    }
+    else if(esc=='4'){
+      if(cont%2==0){jogo[1][1]='x';}
+      else{jogo[1][1]='o';}
+      cont++;
+    }
+    else if(esc=='5'){
+      if(cont%2==0){jogo[1][2]='x';}
+      else{jogo[1][2]='o';}
+      cont++;
+    }
+    else if(esc=='6'){
+      if(cont%2==0){jogo[2][0]='x';}
+      else{jogo[2][0]='o';}
+      cont++;
+    }
+    else if(esc=='7'){
+      if(cont%2==0){jogo[2][1]='x';}
+      else{jogo[2][1]='o';}
+      cont++;
+    }
+    else if(esc=='8'){
+      if(cont%2==0){jogo[2][2]='x';}
+      else{jogo[2][2]='o';}
+      cont++;
+    }
+    else if(esc=='9'){
+      k=0;
+      for(int i=0;i<3;i++){
+      for(int j=0;j<3;j++){
+jogo[i][j]='0'+k;
+  k++;
+}}
+      cont=0;
+    }
+    //mostra o estado atual do jogo
+    k=0;
+    for(int i=0;i<3;i++){
+    for(int j=0;j<3;j++){
+    printf("%c ",jogo[i][j]);
+    k++;
+}
+printf("\n");}
+  
+    }
+  
+
+  return 0;
+}
